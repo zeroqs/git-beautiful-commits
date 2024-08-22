@@ -1,5 +1,6 @@
 import fs from 'fs-extra';
 import { execSync } from 'node:child_process';
+import * as os from 'node:os';
 import path from 'node:path';
 import prompts from 'prompts';
 
@@ -71,7 +72,10 @@ async function setUpHuskyConfig(cwd: string, packageManager: PackageManager) {
     }
 
     runCommand('echo "npx --no -- commitlint --edit \$1" > .husky/prepare-commit-msg');
-    runCommand('chmod +x .husky/prepare-commit-msg');
+
+    if (os.platform() !== 'win32') {
+      runCommand('chmod +x .husky/prepare-commit-msg');
+    }
     fs.writeFileSync(filePath, SCRIPT_TEMPLATE, { encoding: 'utf8', mode: 0o755 });
   } catch (error) {
     handleError(error);
