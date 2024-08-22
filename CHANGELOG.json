@@ -2,6 +2,21 @@
   "name": "beautiful-commits",
   "entries": [
     {
+      "date": "Thu, 22 Aug 2024 03:31:46 GMT",
+      "version": "0.1.2",
+      "tag": "beautiful-commits_v0.1.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "smthq@bk.ru",
+            "package": "beautiful-commits",
+            "commit": "not available",
+            "comment": "🎉 add changelogs"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 22 Aug 2024 03:25:40 GMT",
       "version": "0.1.1",
       "tag": "beautiful-commits_v0.1.1",
