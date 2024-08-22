@@ -61,11 +61,16 @@ async function promptConfig() {
 async function setUpHuskyConfig(cwd: string, packageManager: PackageManager) {
   const filePath = path.resolve(`${cwd}/.husky/prepare-commit-msg`);
   const updatePackagesCommand = getUpdateCommand(packageManager);
-  try {
-    runCommand('npx husky-init');
-    runCommand(updatePackagesCommand);
+  const huskyInstall = await huskyAlreadyInstall();
+  const huskyDirectoryExists = fs.existsSync(`${cwd}/.husky`);
 
-    runCommand('npx husky add .husky/prepare-commit-msg "scripts/prepare-commit-msg.sh"');
+  try {
+    if (!huskyInstall || !huskyDirectoryExists) {
+      runCommand('npx husky-init');
+      runCommand(updatePackagesCommand);
+    }
+
+    runCommand('echo "npx --no -- commitlint --edit \$1" > .husky/prepare-commit-msg');
     runCommand('chmod +x .husky/prepare-commit-msg');
     fs.writeFileSync(filePath, SCRIPT_TEMPLATE, { encoding: 'utf8', mode: 0o755 });
   } catch (error) {
